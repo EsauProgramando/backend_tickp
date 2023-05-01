@@ -34,3 +34,5 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('users/{user}', [UserController::class, 'destroy']);
     Route::get('inventaryAll', [Register_inventaries::class, 'index']);
 });
+
+Route::get('inventario', [Register_inventaries::class, 'index']);
