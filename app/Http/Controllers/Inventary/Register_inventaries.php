@@ -23,6 +23,40 @@ class Register_inventaries extends Controller
         ]);
     }
 
+    public function agregarBines(
+        Request $request
+    ) {
+        $bien = new
+            RegisterInventary;
+
+        $codigo
+            = RegisterInventary::where('codigo_patrimonial', $request->CODIGO_PATRIMONIAL)->first();
+        if (!$codigo) {
+            $bien->codigo_patrimonial = $request->CODIGO_PATRIMONIAL;
+            $bien->denominacion_bien = $request->DENOMINACION_BIEN;
+            $bien->nro_doc_adquisicion = $request->NRO_DOCUMENTO_ADQUIS;
+            $bien->cta_con_seguro = $request->OPC_ASEGURADO;
+            $bien->fecha_adquisicion = $request->FECHA_DOCUMENTO_ADQUIS;
+            $bien->valor_adquisicion = $request->VALOR_ADQUIS;
+            $bien->tipo_cuenta = $request->TIPO_CUENTA;
+            $bien->nro_cuenta_contable = $request->NRO_CTA_CONTABLE;
+            $bien->estado_bien = $request->NOM_EST_BIEN;
+            $bien->condicion = $request->CONDICION;
+            $bien->save();
+            return response()->json([
+                'success' => true,
+                'msg' => 'Registro de inventario agregado correctamente',
+                'data' => $bien
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'msg' => 'El codigo patrimonial ya existe',
+            'data' => $codigo
+        ]);
+        // mostrar errores
+
+    }
 
     public function ticketPDFExcel($codigo, $dia, $mes, $year)
     {
