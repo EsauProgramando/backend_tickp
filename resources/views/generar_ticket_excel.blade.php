@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+</html><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Website</title>
   <!-- Cargar los estilos de Bootstrap -->
 
@@ -49,7 +51,7 @@ body{
     width:45%;
     font-size:6px;
     margin-bottom:-2px;
-    padding-left:50%;
+    padding-left:40%;
     text-align:center;
     white-space: nowrap;
 
@@ -57,7 +59,7 @@ body{
 
 .imagen-barras img{
     margin-top:9px;
-    width:100%;
+    width:80%;
     padding-left:25%;
 
 }
@@ -72,8 +74,8 @@ body{
 
 }
 .imagen-qr{
-    width:75px;
-    height:75px;
+    width:70px;
+    height:70px;
 }
 
 
@@ -95,17 +97,16 @@ body{
                     </div>
                 <div class="">
                    <div class="imagen-barras">
-                        <?php
-                            echo $Br;
-                             ?>
+                        <?php echo $Br;?>
                         <h4><?php echo $codigo ?></h4>
-                        <h4>F.A. <?php echo $dia."-".$mes."-".$year ?></h4>
+                        <h4>F.A. <?php echo $fecha ?></h4>
                     </div>
                </div>
     </div>
     <div class="ticket-qr">
-                    <div >
+                    <div>
                         <?php echo $Qr;?>
+                        
                     </div>
     </div>
 </div>

@@ -16,5 +16,5 @@ use App\Http\Controllers\Inventary\Register_inventaries;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('inventaryPDF/{codigo}/{dia}/{mes}/{year}', [Register_inventaries::class, 'ticketPDFExcel']);//TODO: ENVIAR NOMBRE
+Route::get('inventaryPDF/{codigo}/{fecha}/{descripcion}', [Register_inventaries::class, 'ticketPDFExcel']);//TODO: ENVIAR NOMBRE
 //http://127.0.0.1:8000/api/inventaryPDF

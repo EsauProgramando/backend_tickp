@@ -58,13 +58,14 @@ class Register_inventaries extends Controller
 
     }
 
-    public function ticketPDFExcel($codigo, $dia, $mes, $year)
+    public function ticketPDFExcel($codigo, $fecha,$descripcion)
     {
+        
         $barcode = new \Com\Tecnick\Barcode\Barcode();
         $infoList = array(
             'Codigo' => $codigo,
-            'Fecha' => $dia . "-" . $mes . "-" . $year,
-            'Descripcion' => "nombre", //TODO: ENVIAR NOMBRE
+            'Fecha' => $fecha,
+            'Descripcion' => $descripcion,
         );
         $jsonInfo = json_encode($infoList);
 
@@ -80,9 +81,8 @@ class Register_inventaries extends Controller
 
         $html = view('generar_ticket_excel', [
             'codigo' => $codigo,
-            'dia' => $dia,
-            'mes' => $mes,
-            'year' => $year,
+            'fecha' => $fecha,
+            'descripcion' => $descripcion,
             'Qr' =>  $Qrhtml,
             'Br' =>   $Brhtml
         ]);
