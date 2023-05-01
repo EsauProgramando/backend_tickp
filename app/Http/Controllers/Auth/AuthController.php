@@ -22,7 +22,7 @@ class AuthController extends Controller
 
 
         if (!$token = JWTAuth::attempt($validator->validated())) {
-            return response()->json(['success' => false, 'msg' => 'Correo O Password incorecto']);
+            return response()->json(['success' => false, 'msg' => 'Username O Password incorecto']);
         }
         return  $this->respondWithToken($token);
     }
