@@ -92,7 +92,7 @@ body{
                             <h1>Universidad Nacional de San Martin</h1>
                         </div>
                         <div class="">
-                            <img class="img-log" src="https://unsm.edu.pe/wp-content/uploads/2016/10/cropped-logo-ICONO.png" alt="logo" >
+                            <img class="img-log" src="https://drive.google.com/file/d/18fC3jJKS-cZUdtUYCSwGhwO53UinGYLj/view" alt="logo" >
                         </div>
                     </div>
                 <div class="">
