@@ -106,7 +106,7 @@ body{
     <div class="ticket-qr">
                     <div>
                         <?php echo $Qr;?>
-                        
+
                     </div>
     </div>
 </div>
