@@ -58,8 +58,8 @@ body{
 }
 
 .imagen-barras img{
-    margin-top:9px;
-    width:80%;
+    margin-top:7px;
+    width:75%;
     padding-left:25%;
 
 }
