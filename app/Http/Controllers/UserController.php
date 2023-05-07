@@ -42,10 +42,12 @@ class UserController extends Controller
         if (auth()->user()) {
             $validator = Validator::make($request->all(), [
                 'name' => 'max:100|min:2',
-                'email' => 'email|max:255|unique:users',
+                'email' => 'max:255|unique:users',
                 'password' => 'min:6|confirmed'
 
             ]);
+
+
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
@@ -89,7 +91,7 @@ class UserController extends Controller
         }
         $validator = Validator::make($request->all(), [
             'name' => 'max:100|min:2',
-            'email' => 'email|max:255|unique:users',
+            'email' => 'max:255|unique:users',
             'password' => 'min:6|confirmed'
         ]);
 
@@ -98,14 +100,15 @@ class UserController extends Controller
         }
 
         // editar perfil de usuario auth
-        if (auth()->user()->id == $user_id) {
+        if ($user_id != null  || $user_id != '') {
             $user->name = $request->name ? $request->name : $user->name;
             $user->email = $request->email ? $request->email : $user->email;
             $user->password = $request->password ? Hash::make($request->password) : $user->password;
             $user->save();
             return response()->json(['success' => true, 'data' => $user, 'msg' => 'User updated successfully']);
         }
-        return response()->json(['success' => false, 'msg' => 'User is not logged in']);
+
+        return response()->json(['success' => false, 'msg' => 'Algo salio mal']);
     }
 
     /**
