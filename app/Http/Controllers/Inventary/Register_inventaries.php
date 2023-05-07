@@ -149,7 +149,8 @@ class Register_inventaries extends Controller
 
         if($codigo0!=null){
            
-            $dompdf0->setPaper('10.5cm', '2.54cm', 'landscape');
+            //$dompdf0->setPaper('10.5cm', '2.54cm', 'landscape');
+            $dompdf0->setPaper(array(-1, -1, 108, 72), 'portrait');
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo0->codigo_patrimonial,
@@ -179,7 +180,8 @@ class Register_inventaries extends Controller
     
         }
         if($codigo1!=null){
-            $dompdf1->setPaper('10.5cm', '2.54cm', 'landscape');
+            //$dompdf1->setPaper('10.5cm', '2.54cm', 'landscape');
+            $dompdf1->setPaper(array(-1, -1, 108, 72), 'portrait');
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo1->codigo_patrimonial,
@@ -208,7 +210,8 @@ class Register_inventaries extends Controller
     
         }
         if($codigo2!=null){
-            $dompdf2->setPaper('10.5cm', '2.54cm', 'landscape');
+            //$dompdf2->setPaper('10.5cm', '2.54cm', 'landscape');
+            $dompdf2->setPaper(array(-1, -1, 108, 72), 'portrait');
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo2->codigo_patrimonial,
@@ -240,7 +243,8 @@ class Register_inventaries extends Controller
         }
         
         if($codigo3!=null){
-            $dompdf3->setPaper('10.5cm', '2.54cm', 'landscape');
+            //$dompdf3->setPaper('10.5cm', '2.54cm', 'landscape');
+            $dompdf3->setPaper(array(-1, -1, 108, 72), 'portrait');
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo3->codigo_patrimonial,
@@ -272,7 +276,8 @@ class Register_inventaries extends Controller
         }
         
         if($codigo4!=null){
-            $dompdf4->setPaper('10.5cm', '2.54cm', 'landscape');
+            //$dompdf4->setPaper('10.5cm', '2.54cm', 'landscape');
+            $dompdf4->setPaper(array(-1, -1, 108, 72), 'portrait');
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo4->codigo_patrimonial,
