@@ -334,5 +334,16 @@ class Register_inventaries extends Controller
 
         }
 
-    
+    /*===========CONDICIONES y ESTADO BIEN===========*/
+    public function vista_estado()
+    {
+        $data = RegisterInventary::from('cond_bien')->select('cant_regular', 'cant_malo', 'cant_bueno','cant_nuevo')->get();
+        return response()->json($data);
+    }
+
+    public function vista_condicion()
+    {
+        $data = RegisterInventary::from('condiciones')->select('cond_activo', 'cond_baja')->get();
+        return response()->json($data);
+    }
 }

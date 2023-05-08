@@ -21,6 +21,8 @@ Route::post('registerUser/{rol_id}', [UserController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 // Route::get('user', [UserController::class,'index'])->middleware('jwt.verify');
 Route::post('imprimir', [Register_inventaries::class, 'imprimirSelect']);
+Route::get('estados', [Register_inventaries::class, 'vista_estado']);
+Route::get('condiciones', [Register_inventaries::class, 'vista_condicion']);
 
 
 
