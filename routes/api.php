@@ -20,9 +20,7 @@ use App\Http\Controllers\Inventary\Register_inventaries;
 Route::post('registerUser/{rol_id}', [UserController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 // Route::get('user', [UserController::class,'index'])->middleware('jwt.verify');
-Route::post('imprimir', [Register_inventaries::class, 'imprimirSelect']);
-Route::get('estados', [Register_inventaries::class, 'vista_estado']);
-Route::get('condiciones', [Register_inventaries::class, 'vista_condicion']);
+
 
 
 
@@ -35,8 +33,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::put('users/{user}', [UserController::class, 'update']);
     Route::delete('users/{user}', [UserController::class, 'destroy']);
 
+    Route::post('imprimir', [Register_inventaries::class, 'imprimirSelect']);
+    Route::get('estados', [Register_inventaries::class, 'vista_estado']);
+    Route::get('condiciones', [Register_inventaries::class, 'vista_condicion']);
+
     Route::get('inventaryAll', [Register_inventaries::class, 'index']);
     Route::post('inventary', [Register_inventaries::class, 'agregarBines']);
 });
-
-

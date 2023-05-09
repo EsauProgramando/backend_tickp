@@ -59,9 +59,9 @@ class Register_inventaries extends Controller
 
     }
 
-    public function ticketPDFExcel($codigo, $fecha,$descripcion)
+    public function ticketPDFExcel($codigo, $fecha, $descripcion)
     {
-        
+
         $barcode = new \Com\Tecnick\Barcode\Barcode();
         $infoList = array(
             'Codigo' => $codigo,
@@ -125,11 +125,11 @@ class Register_inventaries extends Controller
     }
 
     /*====Impresión Select===*/
-    public function imprimirSelect(Request $request){
+    public function imprimirSelect(Request $request)
+    {
         $barcode = new \Com\Tecnick\Barcode\Barcode();
-        $objeto= request()->json()->all();
+        $objeto = request()->json()->all();
 
-        
         $codigo0 = RegisterInventary::where('codigo_patrimonial', $objeto['item0'])->first();
         $codigo1 = RegisterInventary::where('codigo_patrimonial', $objeto['item1'])->first();
         $codigo2 = RegisterInventary::where('codigo_patrimonial', $objeto['item2'])->first();
@@ -137,18 +137,18 @@ class Register_inventaries extends Controller
         $codigo4 = RegisterInventary::where('codigo_patrimonial', $objeto['item4'])->first();
 
         $options = new Options();
-        
-        $options->set('isRemoteEnabled',TRUE);
+
+        $options->set('isRemoteEnabled', TRUE);
         $dompdf0 = new Dompdf($options);
         $dompdf1 = new Dompdf($options);
         $dompdf2 = new Dompdf($options);
         $dompdf3 = new Dompdf($options);
         $dompdf4 = new Dompdf($options);
-        
-        
 
-        if($codigo0!=null){
-           
+
+
+        if ($codigo0 != null) {
+
             //$dompdf0->setPaper('10.5cm', '2.54cm', 'landscape');
             $dompdf0->setPaper(array(-1, -1, 108, 72), 'portrait');
             ob_start();
@@ -158,28 +158,29 @@ class Register_inventaries extends Controller
                 'Descripcion' => $codigo0->denominacion_bien
             );
             $jsonInfo = json_encode($infoList);
-    
+
             $Qrhtml =  $this->generadorQr($jsonInfo, $barcode);
             $Brhtml = $this->generadorCodigoBarra($jsonInfo, $barcode);
-            
-            $html = view('generar_ticket_excel',['codigo'=>$codigo0->codigo_patrimonial,
-                                         'fecha'=>$codigo0->fecha_adquisicon,
-                                         'descripcion'=>$codigo0->denominacion_bien,
-                                         'Qr' =>  $Qrhtml,
-                                         'Br' =>   $Brhtml]);
+
+            $html = view('generar_ticket_excel', [
+                'codigo' => $codigo0->codigo_patrimonial,
+                'fecha' => $codigo0->fecha_adquisicon,
+                'descripcion' => $codigo0->denominacion_bien,
+                'Qr' =>  $Qrhtml,
+                'Br' =>   $Brhtml
+            ]);
             $dompdf0->loadHtml($html);
             $dompdf0->render();
             $pdf_content = $dompdf0->output();
-    
-    
+
+
             // Guardar el archivo PDF en la carpeta deseada
-            $save_path0 = __DIR__ . '../../pdftemporal/'.$codigo0->codigo_patrimonial.'file.pdf'; // Ruta de la carpeta y el archivo destino
+            $save_path0 = __DIR__ . '../../pdftemporal/' . $codigo0->codigo_patrimonial . 'file.pdf'; // Ruta de la carpeta y el archivo destino
             file_put_contents($save_path0, $pdf_content);
-            $listaArchivosPDF[]='../../pdftemporal/'.$codigo0->codigo_patrimonial.'file.pdf';
-            $listaArchivosPDF2[]= $save_path0;
-    
+            $listaArchivosPDF[] = '../../pdftemporal/' . $codigo0->codigo_patrimonial . 'file.pdf';
+            $listaArchivosPDF2[] = $save_path0;
         }
-        if($codigo1!=null){
+        if ($codigo1 != null) {
             //$dompdf1->setPaper('10.5cm', '2.54cm', 'landscape');
             $dompdf1->setPaper(array(-1, -1, 108, 72), 'portrait');
             ob_start();
@@ -189,27 +190,28 @@ class Register_inventaries extends Controller
                 'Descripcion' => $codigo1->denominacion_bien
             );
             $jsonInfo = json_encode($infoList);
-    
+
             $Qrhtml =  $this->generadorQr($jsonInfo, $barcode);
             $Brhtml = $this->generadorCodigoBarra($jsonInfo, $barcode);
-            $html = view('generar_ticket_excel',['codigo'=>$codigo1->codigo_patrimonial,
-                                         'fecha'=>$codigo1->fecha_adquisicon,
-                                         'descripcion'=>$codigo1->denominacion_bien,
-                                         'Qr' =>  $Qrhtml,
-                                         'Br' =>   $Brhtml]);
+            $html = view('generar_ticket_excel', [
+                'codigo' => $codigo1->codigo_patrimonial,
+                'fecha' => $codigo1->fecha_adquisicon,
+                'descripcion' => $codigo1->denominacion_bien,
+                'Qr' =>  $Qrhtml,
+                'Br' =>   $Brhtml
+            ]);
             $dompdf1->loadHtml($html);
             $dompdf1->render();
             $pdf_content = $dompdf1->output();
-    
-    
+
+
             // Guardar el archivo PDF en la carpeta deseada
-            $save_path1 = __DIR__ . '../../pdftemporal/'.$codigo1->codigo_patrimonial.'file.pdf'; // Ruta de la carpeta y el archivo destino
+            $save_path1 = __DIR__ . '../../pdftemporal/' . $codigo1->codigo_patrimonial . 'file.pdf'; // Ruta de la carpeta y el archivo destino
             file_put_contents($save_path1, $pdf_content);
-            $listaArchivosPDF[]='../../pdftemporal/'.$codigo1->codigo_patrimonial.'file.pdf';
-            $listaArchivosPDF2[]= $save_path1;
-    
+            $listaArchivosPDF[] = '../../pdftemporal/' . $codigo1->codigo_patrimonial . 'file.pdf';
+            $listaArchivosPDF2[] = $save_path1;
         }
-        if($codigo2!=null){
+        if ($codigo2 != null) {
             //$dompdf2->setPaper('10.5cm', '2.54cm', 'landscape');
             $dompdf2->setPaper(array(-1, -1, 108, 72), 'portrait');
             ob_start();
@@ -217,32 +219,33 @@ class Register_inventaries extends Controller
                 'Codigo' => $codigo2->codigo_patrimonial,
                 'Fecha' => $codigo2->fecha_adquisicon,
                 'Descripcion' => $codigo2->denominacion_bien
-                
+
             );
             $jsonInfo = json_encode($infoList);
-    
+
             $Qrhtml =  $this->generadorQr($jsonInfo, $barcode);
             $Brhtml = $this->generadorCodigoBarra($jsonInfo, $barcode);
-        
-            $html = view('generar_ticket_excel',['codigo'=>$codigo2->codigo_patrimonial,
-                                         'fecha'=>$codigo2->fecha_adquisicon,
-                                         'descripcion'=>$codigo2->denominacion_bien,
-                                         'Qr' =>  $Qrhtml,
-                                         'Br' =>   $Brhtml]);
+
+            $html = view('generar_ticket_excel', [
+                'codigo' => $codigo2->codigo_patrimonial,
+                'fecha' => $codigo2->fecha_adquisicon,
+                'descripcion' => $codigo2->denominacion_bien,
+                'Qr' =>  $Qrhtml,
+                'Br' =>   $Brhtml
+            ]);
             $dompdf2->loadHtml($html);
             $dompdf2->render();
             $pdf_content = $dompdf2->output();
-    
-    
+
+
             // Guardar el archivo PDF en la carpeta deseada
-            $save_path2 = __DIR__ . '../../pdftemporal/'.$codigo2->codigo_patrimonial.'file.pdf'; // Ruta de la carpeta y el archivo destino
+            $save_path2 = __DIR__ . '../../pdftemporal/' . $codigo2->codigo_patrimonial . 'file.pdf'; // Ruta de la carpeta y el archivo destino
             file_put_contents($save_path2, $pdf_content);
-            $listaArchivosPDF[]='../../pdftemporal/'.$codigo2->codigo_patrimonial.'file.pdf';
-            $listaArchivosPDF2[]= $save_path2;
-    
+            $listaArchivosPDF[] = '../../pdftemporal/' . $codigo2->codigo_patrimonial . 'file.pdf';
+            $listaArchivosPDF2[] = $save_path2;
         }
-        
-        if($codigo3!=null){
+
+        if ($codigo3 != null) {
             //$dompdf3->setPaper('10.5cm', '2.54cm', 'landscape');
             $dompdf3->setPaper(array(-1, -1, 108, 72), 'portrait');
             ob_start();
@@ -250,32 +253,33 @@ class Register_inventaries extends Controller
                 'Codigo' => $codigo3->codigo_patrimonial,
                 'Fecha' => $codigo3->fecha_adquisicon,
                 'Descripcion' => $codigo3->denominacion_bien
-                
+
             );
             $jsonInfo = json_encode($infoList);
-    
+
             $Qrhtml =  $this->generadorQr($jsonInfo, $barcode);
             $Brhtml = $this->generadorCodigoBarra($jsonInfo, $barcode);
-        
-            $html = view('generar_ticket_excel',['codigo'=>$codigo3->codigo_patrimonial,
-                                         'fecha'=>$codigo3->fecha_adquisicon,
-                                         'descripcion'=>$codigo3->denominacion_bien,
-                                         'Qr' =>  $Qrhtml,
-                                         'Br' =>   $Brhtml]);
+
+            $html = view('generar_ticket_excel', [
+                'codigo' => $codigo3->codigo_patrimonial,
+                'fecha' => $codigo3->fecha_adquisicon,
+                'descripcion' => $codigo3->denominacion_bien,
+                'Qr' =>  $Qrhtml,
+                'Br' =>   $Brhtml
+            ]);
             $dompdf3->loadHtml($html);
             $dompdf3->render();
             $pdf_content = $dompdf3->output();
-    
-    
+
+
             // Guardar el archivo PDF en la carpeta deseada
-            $save_path3= __DIR__ . '../../pdftemporal/'.$codigo3->codigo_patrimonial.'file.pdf'; // Ruta de la carpeta y el archivo destino
+            $save_path3 = __DIR__ . '../../pdftemporal/' . $codigo3->codigo_patrimonial . 'file.pdf'; // Ruta de la carpeta y el archivo destino
             file_put_contents($save_path3, $pdf_content);
-            $listaArchivosPDF[]='../../pdftemporal/'.$codigo3->codigo_patrimonial.'file.pdf';
-            $listaArchivosPDF2[]= $save_path3;
-    
+            $listaArchivosPDF[] = '../../pdftemporal/' . $codigo3->codigo_patrimonial . 'file.pdf';
+            $listaArchivosPDF2[] = $save_path3;
         }
-        
-        if($codigo4!=null){
+
+        if ($codigo4 != null) {
             //$dompdf4->setPaper('10.5cm', '2.54cm', 'landscape');
             $dompdf4->setPaper(array(-1, -1, 108, 72), 'portrait');
             ob_start();
@@ -283,46 +287,43 @@ class Register_inventaries extends Controller
                 'Codigo' => $codigo4->codigo_patrimonial,
                 'Fecha' => $codigo4->fecha_adquisicon,
                 'Descripcion' => $codigo4->denominacion_bien
-                
+
             );
             $jsonInfo = json_encode($infoList);
-    
+
             $Qrhtml =  $this->generadorQr($jsonInfo, $barcode);
             $Brhtml = $this->generadorCodigoBarra($jsonInfo, $barcode);
-        
-            $html = view('generar_ticket_excel',['codigo'=>$codigo4->codigo_patrimonial,
-                                         'fecha'=>$codigo4->fecha_adquisicon,
-                                         'descripcion'=>$codigo4->denominacion_bien,
-                                         'Qr' =>  $Qrhtml,
-                                         'Br' =>   $Brhtml
-                                        ]);
+
+            $html = view('generar_ticket_excel', [
+                'codigo' => $codigo4->codigo_patrimonial,
+                'fecha' => $codigo4->fecha_adquisicon,
+                'descripcion' => $codigo4->denominacion_bien,
+                'Qr' =>  $Qrhtml,
+                'Br' =>   $Brhtml
+            ]);
             $dompdf4->loadHtml($html);
             $dompdf4->render();
             $pdf_content = $dompdf4->output();
-    
-    
+
+
             // Guardar el archivo PDF en la carpeta deseada
-            $save_path4 = __DIR__ . '../../pdftemporal/'.$codigo4->codigo_patrimonial.'file.pdf'; // Ruta de la carpeta y el archivo destino
+            $save_path4 = __DIR__ . '../../pdftemporal/' . $codigo4->codigo_patrimonial . 'file.pdf'; // Ruta de la carpeta y el archivo destino
             file_put_contents($save_path4, $pdf_content);
-            $listaArchivosPDF[]='../../pdftemporal/'.$codigo4->codigo_patrimonial.'file.pdf';
-            $listaArchivosPDF2[]= $save_path4;
-    
+            $listaArchivosPDF[] = '../../pdftemporal/' . $codigo4->codigo_patrimonial . 'file.pdf';
+            $listaArchivosPDF2[] = $save_path4;
         }
-        
+
         /*===combinar===*/
         $combinador = new Merger;
         //$pdf = new FPDF();
         //echo (implode(", ", $listaArchivosPDF));
         foreach ($listaArchivosPDF2 as $archivoPDF) {
             $combinador->addFile($archivoPDF);
-            
-            
         }
         $salida = $combinador->merge();
         foreach ($listaArchivosPDF2 as $archivoPDF) {
-            
+
             unlink($archivoPDF);
-            
         }
         $nombreArchivo = "combinado.pdf";
         header("Content-type:application/pdf");
@@ -331,13 +332,12 @@ class Register_inventaries extends Controller
         // header("Accept-Ranges:bytes");
         # Imprimir salida luego de encabezados
         echo $salida;
-
-        }
+    }
 
     /*===========CONDICIONES y ESTADO BIEN===========*/
     public function vista_estado()
     {
-        $data = RegisterInventary::from('cond_bien')->select('cant_regular', 'cant_malo', 'cant_bueno','cant_nuevo')->get();
+        $data = RegisterInventary::from('cond_bien')->select('cant_regular', 'cant_malo', 'cant_bueno', 'cant_nuevo')->get();
         return response()->json($data);
     }
 
