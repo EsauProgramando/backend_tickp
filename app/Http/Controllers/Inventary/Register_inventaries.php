@@ -154,7 +154,7 @@ class Register_inventaries extends Controller
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo0->codigo_patrimonial,
-                'Fecha' => $codigo0->fecha_adquisicon,
+                'Fecha' => $codigo0->fecha_adquisicion,
                 'Descripcion' => $codigo0->denominacion_bien
             );
             $jsonInfo = json_encode($infoList);
@@ -165,6 +165,7 @@ class Register_inventaries extends Controller
             $html = view('generar_ticket_excel',['codigo'=>$codigo0->codigo_patrimonial,
                                          'fecha'=>$codigo0->fecha_adquisicon,
                                          'descripcion'=>$codigo0->denominacion_bien,
+                                         'fecha'=>$codigo0->fecha_adquisicion,
                                          'Qr' =>  $Qrhtml,
                                          'Br' =>   $Brhtml]);
             $dompdf0->loadHtml($html);
@@ -185,7 +186,7 @@ class Register_inventaries extends Controller
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo1->codigo_patrimonial,
-                'Fecha' => $codigo1->fecha_adquisicon,
+                'Fecha' => $codigo1->fecha_adquisicion,
                 'Descripcion' => $codigo1->denominacion_bien
             );
             $jsonInfo = json_encode($infoList);
@@ -195,6 +196,7 @@ class Register_inventaries extends Controller
             $html = view('generar_ticket_excel',['codigo'=>$codigo1->codigo_patrimonial,
                                          'fecha'=>$codigo1->fecha_adquisicon,
                                          'descripcion'=>$codigo1->denominacion_bien,
+                                         'fecha'=>$codigo1->fecha_adquisicion,
                                          'Qr' =>  $Qrhtml,
                                          'Br' =>   $Brhtml]);
             $dompdf1->loadHtml($html);
@@ -215,7 +217,7 @@ class Register_inventaries extends Controller
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo2->codigo_patrimonial,
-                'Fecha' => $codigo2->fecha_adquisicon,
+                'Fecha' => $codigo2->fecha_adquisicion,
                 'Descripcion' => $codigo2->denominacion_bien
                 
             );
@@ -227,6 +229,7 @@ class Register_inventaries extends Controller
             $html = view('generar_ticket_excel',['codigo'=>$codigo2->codigo_patrimonial,
                                          'fecha'=>$codigo2->fecha_adquisicon,
                                          'descripcion'=>$codigo2->denominacion_bien,
+                                         'fecha'=>$codigo2->fecha_adquisicion,
                                          'Qr' =>  $Qrhtml,
                                          'Br' =>   $Brhtml]);
             $dompdf2->loadHtml($html);
@@ -248,7 +251,7 @@ class Register_inventaries extends Controller
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo3->codigo_patrimonial,
-                'Fecha' => $codigo3->fecha_adquisicon,
+                'Fecha' => $codigo3->fecha_adquisicion,
                 'Descripcion' => $codigo3->denominacion_bien
                 
             );
@@ -260,6 +263,7 @@ class Register_inventaries extends Controller
             $html = view('generar_ticket_excel',['codigo'=>$codigo3->codigo_patrimonial,
                                          'fecha'=>$codigo3->fecha_adquisicon,
                                          'descripcion'=>$codigo3->denominacion_bien,
+                                         'fecha'=>$codigo3->fecha_adquisicion,
                                          'Qr' =>  $Qrhtml,
                                          'Br' =>   $Brhtml]);
             $dompdf3->loadHtml($html);
@@ -281,7 +285,7 @@ class Register_inventaries extends Controller
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo4->codigo_patrimonial,
-                'Fecha' => $codigo4->fecha_adquisicon,
+                'Fecha' => $codigo4->fecha_adquisicion,
                 'Descripcion' => $codigo4->denominacion_bien
                 
             );
@@ -293,6 +297,7 @@ class Register_inventaries extends Controller
             $html = view('generar_ticket_excel',['codigo'=>$codigo4->codigo_patrimonial,
                                          'fecha'=>$codigo4->fecha_adquisicon,
                                          'descripcion'=>$codigo4->denominacion_bien,
+                                         'fecha'=>$codigo4->fecha_adquisicion,
                                          'Qr' =>  $Qrhtml,
                                          'Br' =>   $Brhtml
                                         ]);
