@@ -130,6 +130,7 @@ class Register_inventaries extends Controller
         $barcode = new \Com\Tecnick\Barcode\Barcode();
         $objeto = request()->json()->all();
 
+
         $codigo0 = RegisterInventary::where('codigo_patrimonial', $objeto['item0'])->first();
         $codigo1 = RegisterInventary::where('codigo_patrimonial', $objeto['item1'])->first();
         $codigo2 = RegisterInventary::where('codigo_patrimonial', $objeto['item2'])->first();
@@ -154,7 +155,7 @@ class Register_inventaries extends Controller
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo0->codigo_patrimonial,
-                'Fecha' => $codigo0->fecha_adquisicon,
+                'Fecha' => $codigo0->fecha_adquisicion,
                 'Descripcion' => $codigo0->denominacion_bien
             );
             $jsonInfo = json_encode($infoList);
@@ -166,6 +167,7 @@ class Register_inventaries extends Controller
                 'codigo' => $codigo0->codigo_patrimonial,
                 'fecha' => $codigo0->fecha_adquisicon,
                 'descripcion' => $codigo0->denominacion_bien,
+                'fecha' => $codigo0->fecha_adquisicion,
                 'Qr' =>  $Qrhtml,
                 'Br' =>   $Brhtml
             ]);
@@ -186,7 +188,7 @@ class Register_inventaries extends Controller
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo1->codigo_patrimonial,
-                'Fecha' => $codigo1->fecha_adquisicon,
+                'Fecha' => $codigo1->fecha_adquisicion,
                 'Descripcion' => $codigo1->denominacion_bien
             );
             $jsonInfo = json_encode($infoList);
@@ -197,6 +199,7 @@ class Register_inventaries extends Controller
                 'codigo' => $codigo1->codigo_patrimonial,
                 'fecha' => $codigo1->fecha_adquisicon,
                 'descripcion' => $codigo1->denominacion_bien,
+                'fecha' => $codigo1->fecha_adquisicion,
                 'Qr' =>  $Qrhtml,
                 'Br' =>   $Brhtml
             ]);
@@ -217,7 +220,7 @@ class Register_inventaries extends Controller
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo2->codigo_patrimonial,
-                'Fecha' => $codigo2->fecha_adquisicon,
+                'Fecha' => $codigo2->fecha_adquisicion,
                 'Descripcion' => $codigo2->denominacion_bien
 
             );
@@ -230,6 +233,7 @@ class Register_inventaries extends Controller
                 'codigo' => $codigo2->codigo_patrimonial,
                 'fecha' => $codigo2->fecha_adquisicon,
                 'descripcion' => $codigo2->denominacion_bien,
+                'fecha' => $codigo2->fecha_adquisicion,
                 'Qr' =>  $Qrhtml,
                 'Br' =>   $Brhtml
             ]);
@@ -251,7 +255,7 @@ class Register_inventaries extends Controller
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo3->codigo_patrimonial,
-                'Fecha' => $codigo3->fecha_adquisicon,
+                'Fecha' => $codigo3->fecha_adquisicion,
                 'Descripcion' => $codigo3->denominacion_bien
 
             );
@@ -264,6 +268,7 @@ class Register_inventaries extends Controller
                 'codigo' => $codigo3->codigo_patrimonial,
                 'fecha' => $codigo3->fecha_adquisicon,
                 'descripcion' => $codigo3->denominacion_bien,
+                'fecha' => $codigo3->fecha_adquisicion,
                 'Qr' =>  $Qrhtml,
                 'Br' =>   $Brhtml
             ]);
@@ -285,7 +290,7 @@ class Register_inventaries extends Controller
             ob_start();
             $infoList = array(
                 'Codigo' => $codigo4->codigo_patrimonial,
-                'Fecha' => $codigo4->fecha_adquisicon,
+                'Fecha' => $codigo4->fecha_adquisicion,
                 'Descripcion' => $codigo4->denominacion_bien
 
             );
@@ -298,6 +303,7 @@ class Register_inventaries extends Controller
                 'codigo' => $codigo4->codigo_patrimonial,
                 'fecha' => $codigo4->fecha_adquisicon,
                 'descripcion' => $codigo4->denominacion_bien,
+                'fecha' => $codigo4->fecha_adquisicion,
                 'Qr' =>  $Qrhtml,
                 'Br' =>   $Brhtml
             ]);
