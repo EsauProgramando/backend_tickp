@@ -24,6 +24,14 @@ class Register_inventaries extends Controller
         ]);
     }
 
+    public function bienid($codigo) {
+        $bien = RegisterInventary::where('codigo_patrimonial', $codigo)->first();
+        //validar si el producto existe
+        if (!$bien) {
+               return  response()->json(["message" => "bien no encontrado"], 404);
+         }
+        return response()->json($bien);
+    }
     public function agregarBines(
         Request $request
     ) {
