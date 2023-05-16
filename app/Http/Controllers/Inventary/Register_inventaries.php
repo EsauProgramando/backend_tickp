@@ -359,4 +359,22 @@ class Register_inventaries extends Controller
         $data = RegisterInventary::from('condiciones')->select('cond_activo', 'cond_baja')->get();
         return response()->json($data);
     }
+
+    /*============ACTUALIZAR BIEN====================*/
+    public function update_inventario(Request $request, $codigo){
+        
+            
+            $objeto= request()->json()->all();
+            $bien = RegisterInventary::where('codigo_patrimonial', $codigo)->first();
+            if (!($bien)) {
+                return response()->json(['success' => false, 'msg' => 'Inventario no encontrado']);
+            }
+            
+            $bien->estado_bien=$objeto['estado_bien'];
+            $bien->condicion=$objeto['condicion'];  
+            $bien->save();         
+            return response()->json(['message' => 'Registro actualizado correctamente',$bien]);
+    
+            
+    }
 }
