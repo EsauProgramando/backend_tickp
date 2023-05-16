@@ -24,6 +24,7 @@ Route::post('imprimir', [Register_inventaries::class, 'imprimirSelect']);
 Route::get('estados', [Register_inventaries::class, 'vista_estado']);
 Route::get('condiciones', [Register_inventaries::class, 'vista_condicion']);
 Route::get('biencodigo/{codigo}', [Register_inventaries::class, 'bienid']);
+Route::put('inventario/{codigo}', [Register_inventaries::class, 'update_inventario']);
 
 
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -37,6 +38,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     Route::get('inventaryAll', [Register_inventaries::class, 'index']);
     Route::post('inventary', [Register_inventaries::class, 'agregarBines']);
+    
 });
 
 
