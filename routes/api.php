@@ -15,8 +15,9 @@ use App\Http\Controllers\Inventary\Register_inventaries;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
-*/
+// */
 
+Route::post('forget-password',[UserController::class,'forgetPassword']);
 Route::post('registerUser/{rol_id}', [UserController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 // Route::get('user', [UserController::class,'index'])->middleware('jwt.verify');
@@ -29,7 +30,7 @@ Route::put('inventario/{codigo}', [Register_inventaries::class, 'update_inventar
 Route::get('barras/{codigo}', [Register_inventaries::class, 'BarraCodigo']);
 
 
-
+Route::post('reset-password', [UserController::class, 'resetPassword']);
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('usersinfo', [UserController::class, 'index']); //http://127.0.0.1:8000/api/usersinfo
     Route::post('updateProfile', [UserController::class, 'updateProfile']); //actualizar perfil
@@ -43,5 +44,4 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('inventary', [Register_inventaries::class, 'agregarBines']);
     
 });
-
 
