@@ -9,6 +9,8 @@ use App\Models\register_inventaries as RegisterInventary;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use iio\libmergepdf\Merger;
+use Illuminate\Support\Facades\Response;
+
 
 
 
@@ -103,11 +105,11 @@ class Register_inventaries extends Controller
         return $dompdf->stream("ticket" . $codigo . ".pdf", array("Attachment" => false));
     }
 
-    protected function generadorCodigoBarra($jsonInfo, $barcode)
+    protected function generadorCodigoBarra($codigo, $barcode)
     {
         $bobj2 = $barcode->getBarcodeObj(
-            "PDF417",             // Tipo de Barcode o Qr
-            $jsonInfo,  // Datos
+            "C128",             // Tipo de Barcode o Qr
+            $codigo,  // Datos
             -3,             // Width
             -4,             // Height
             "black",         // Color del codigo
@@ -117,6 +119,7 @@ class Register_inventaries extends Controller
         $Brhtml = '<img src="data:image/png;base64,' . base64_encode($Br) . '" alt="barcode"   />';
         return  $Brhtml;
     }
+    
     protected function generadorQr($jsonInfo, $barcode)
     {
         $bobj1 = $barcode->getBarcodeObj(
@@ -168,7 +171,7 @@ class Register_inventaries extends Controller
             $jsonInfo = json_encode($infoList);
     
             $Qrhtml =  $this->generadorQr($jsonInfo, $barcode);
-            $Brhtml = $this->generadorCodigoBarra($jsonInfo, $barcode);
+            $Brhtml = $this->generadorCodigoBarra($codigo0->codigo_patrimonial, $barcode);
             
             $html = view('generar_ticket_excel',['codigo'=>$codigo0->codigo_patrimonial,
                                          'fecha'=>$codigo0->fecha_adquisicon,
@@ -200,7 +203,7 @@ class Register_inventaries extends Controller
             $jsonInfo = json_encode($infoList);
     
             $Qrhtml =  $this->generadorQr($jsonInfo, $barcode);
-            $Brhtml = $this->generadorCodigoBarra($jsonInfo, $barcode);
+            $Brhtml = $this->generadorCodigoBarra($codigo1->codigo_patrimonial, $barcode);
             $html = view('generar_ticket_excel',['codigo'=>$codigo1->codigo_patrimonial,
                                          'fecha'=>$codigo1->fecha_adquisicon,
                                          'descripcion'=>$codigo1->denominacion_bien,
@@ -232,7 +235,7 @@ class Register_inventaries extends Controller
             $jsonInfo = json_encode($infoList);
     
             $Qrhtml =  $this->generadorQr($jsonInfo, $barcode);
-            $Brhtml = $this->generadorCodigoBarra($jsonInfo, $barcode);
+            $Brhtml = $this->generadorCodigoBarra($codigo2->codigo_patrimonial, $barcode);
         
             $html = view('generar_ticket_excel',['codigo'=>$codigo2->codigo_patrimonial,
                                          'fecha'=>$codigo2->fecha_adquisicon,
@@ -266,7 +269,7 @@ class Register_inventaries extends Controller
             $jsonInfo = json_encode($infoList);
     
             $Qrhtml =  $this->generadorQr($jsonInfo, $barcode);
-            $Brhtml = $this->generadorCodigoBarra($jsonInfo, $barcode);
+            $Brhtml = $this->generadorCodigoBarra($codigo3->codigo_patrimonial, $barcode);
         
             $html = view('generar_ticket_excel',['codigo'=>$codigo3->codigo_patrimonial,
                                          'fecha'=>$codigo3->fecha_adquisicon,
@@ -300,7 +303,7 @@ class Register_inventaries extends Controller
             $jsonInfo = json_encode($infoList);
     
             $Qrhtml =  $this->generadorQr($jsonInfo, $barcode);
-            $Brhtml = $this->generadorCodigoBarra($jsonInfo, $barcode);
+            $Brhtml = $this->generadorCodigoBarra($codigo4->codigo_patrimonial, $barcode);
         
             $html = view('generar_ticket_excel',['codigo'=>$codigo4->codigo_patrimonial,
                                          'fecha'=>$codigo4->fecha_adquisicon,
