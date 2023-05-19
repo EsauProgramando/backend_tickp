@@ -56,9 +56,13 @@ body{
     white-space: nowrap;
 
 }
-
+.imagen-barras{
+    width:150px;
+    height:40px;
+}
 .imagen-barras img{
     margin-top:7px;
+    height:100%;
     width:75%;
     padding-left:25%;
 
