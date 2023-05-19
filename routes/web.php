@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Inventary\Register_inventaries;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +19,7 @@ use App\Http\Controllers\Inventary\Register_inventaries;
 // });
 Route::get('inventaryPDF/{codigo}/{fecha}/{descripcion}', [Register_inventaries::class, 'ticketPDFExcel']);//TODO: ENVIAR NOMBRE
 //http://127.0.0.1:8000/api/inventaryPDF
+Route::get('reset-password', [UserController::class, 'resetPasswordLoad']);
+Route::get('/resetinfo', function () {
+    return view('resetinfo');
+});

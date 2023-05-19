@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\PasswordReset;
 use App\Models\Rol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
+use Mail;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
@@ -164,4 +169,83 @@ class UserController extends Controller
             return response()->json(['success' => false, 'msg' => $th->getMessage()]);
         }
     }
+
+    // forget password api method
+     public function forgetPassword(Request $request){
+        try {
+          $user = User::where('email', $request->email)->get();
+          if(count($user) >0){
+              $token = Str::random(40);
+              $domain =URL::to('/');
+              $url = $domain.'/reset-password?token='.$token;
+
+              $data['url'] = $url;
+              $data['email'] = $request->email;
+              $data['title'] = 'Restablecer contraseña';
+              $data['body'] = 'Click On the link below to reset your password';
+
+              Mail::send('forgertPasswordMail', ['data' => $data], function ($message) use ($data) {
+                  $message->to($data['email'])
+                      ->subject($data['title']);
+              });
+              $datetime = Carbon::now()->format('Y-m-d H:i:s');
+              PasswordReset::updateOrCreate(
+                  ['email' => $request->email],
+                  [
+                      'email' => $request->email,
+                      'token' => $token,
+                      'created_at' => $datetime
+                  ]
+              );
+
+              return response()->json(['success' => true, 'msg' => 'Email enviado']);
+
+          }else{
+            return response()->json(['success' => false, 'msg' => 'Email no encontrado']);
+          }
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'msg' => $e->getMessage()]);
+        }
+
+     }
+
+      // reset password view load
+      public function resetPasswordLoad(Request $request){
+        $token = $request->token;
+        $passwordReset = PasswordReset::where('token', $token)->get();
+        if(isset($passwordReset) && count($passwordReset) > 0){
+
+            $user = User::where('email', $passwordReset[0]->email)->get();
+            return view('resetPassword', compact('user'));
+        }else{
+            return view('404');
+        }
+      }
+
+      //password reset functionality 
+    public function resetPassword(Request $request){
+      try {
+        
+        $validator = Validator::make($request->all(), [
+          'password' => 'required|min:6',
+      ]);
+
+      if ($validator->fails()) {
+          return  $validator->errors();
+      }
+      $user =User::find($request->id);
+      $user->password = Hash::make($request->password);
+      $user->save();
+
+       PasswordReset::where('email', $user->email)->delete();
+      return   response()->json(['success' => true, 'msg' => 'Password reset successfully']);
+
+      } catch (\Throwable $th) {
+        return response()->json(['success' => false, 'msg' => $th->getMessage()]);
+      }
+            
+      
+    }
+
 }
