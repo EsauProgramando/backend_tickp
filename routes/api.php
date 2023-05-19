@@ -26,6 +26,9 @@ Route::get('condiciones', [Register_inventaries::class, 'vista_condicion']);
 Route::get('biencodigo/{codigo}', [Register_inventaries::class, 'bienid']);
 Route::put('inventario/{codigo}', [Register_inventaries::class, 'update_inventario']);
 
+Route::get('barras/{codigo}', [Register_inventaries::class, 'BarraCodigo']);
+
+
 
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('usersinfo', [UserController::class, 'index']); //http://127.0.0.1:8000/api/usersinfo
