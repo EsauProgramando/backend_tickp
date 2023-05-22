@@ -11,6 +11,7 @@ class register_inventaries extends Model
 
     protected $table = 'register_inventaries';
     //Relacion uno a muchos(inversa)
+    
     public function User()
     {
         return $this->belongsTo('App\Models\User');
