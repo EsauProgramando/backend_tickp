@@ -26,11 +26,13 @@ return new class extends Migration
             $table->string('cta_con_seguro', 2)->nullable();
             $table->string('estado_bien', 1)->nullable();
             $table->string('condicion', 1)->nullable();
+            
             $table->unsignedBigInteger('user_id')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('set null');
             $table->timestamps();
+            
         });
     }
 
