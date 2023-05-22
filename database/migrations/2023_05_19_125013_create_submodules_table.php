@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('submodules', function (Blueprint $table) {
             $table->id();
             $table->string('name', 140)->nullable();
+            $table->string('route', 140)->nullable();
             $table->integer('create')->default(0);
             $table->integer('read')->default(0);
             $table->integer('update')->default(0);

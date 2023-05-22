@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Submodeles extends Model
 {
     use HasFactory;
-    protected $table = 'submodeles';
+     protected $table = 'submodules';
     //Relacion uno a muchos(inversa)
 
     public function Module()
