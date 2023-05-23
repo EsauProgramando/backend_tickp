@@ -375,6 +375,7 @@ class Register_inventaries extends Controller
             
             $bien->estado_bien=$objeto['estado_bien'];
             $bien->condicion=$objeto['condicion'];  
+            $bien->fecha_inventario=$objeto['fecha_inventario']; 
             $bien->save();         
             return response()->json(['message' => 'Registro actualizado correctamente',$bien]);
     
