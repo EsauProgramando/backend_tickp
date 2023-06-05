@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('ruc_entidad', 11)->nullable();
             $table->string('codigo_patrimonial', 12)->nullable();
-            $table->string('denominacion_bien', 120)->nullable();
+            $table->string('denominacion_bien', 250)->nullable();
             $table->string('actos_de_adquisicion_que_genera_alta', 1)->nullable();
             $table->string('nro_doc_adquisicion', 50)->nullable();
             $table->date('fecha_adquisicion')->nullable();
@@ -28,9 +28,9 @@ return new class extends Migration
             $table->string('condicion', 1)->nullable();
             $table->decimal('valor_adquis', 20,2)->nullable();
             $table->decimal('valor_neto', 20,2)->nullable();
-            $table->string('desc_area', 50)->nullable();
-            $table->string('marca', 50)->nullable();
-            $table->string('modelo', 50)->nullable();
+            $table->string('desc_area', 250)->nullable();
+            $table->string('marca', 100)->nullable();
+            $table->string('modelo', 100)->nullable();
             $table->string('dimension', 50)->nullable();
             $table->string('serie', 50)->nullable();
             $table->string('color', 50)->nullable();
