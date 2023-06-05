@@ -26,6 +26,14 @@ return new class extends Migration
             $table->string('cta_con_seguro', 2)->nullable();
             $table->string('estado_bien', 1)->nullable();
             $table->string('condicion', 1)->nullable();
+            $table->decimal('valor_adquis', 20,2)->nullable();
+            $table->decimal('valor_neto', 20,2)->nullable();
+            $table->string('desc_area', 50)->nullable();
+            $table->string('marca', 50)->nullable();
+            $table->string('modelo', 50)->nullable();
+            $table->string('dimension', 50)->nullable();
+            $table->string('serie', 50)->nullable();
+            $table->string('color', 50)->nullable();
             
             $table->unsignedBigInteger('user_id')->nullable();
 
