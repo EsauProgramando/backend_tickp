@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Response;
 
 class Register_inventaries extends Controller
 {
+    
     public function index()
     {
         $register_inventaries = RegisterInventary::all();
@@ -34,37 +35,72 @@ class Register_inventaries extends Controller
          }
         return response()->json($bien);
     }
+
+
+
     public function agregarBines(
         Request $request
     ) {
-        $bien = new
-            RegisterInventary;
+        
+        $bien = new RegisterInventary;
+        
+            $codigo = RegisterInventary::where('codigo_patrimonial', $request->CODIGO_PATRIMONIAL)->first();
+            if (!$codigo) {
 
-        $codigo
-            = RegisterInventary::where('codigo_patrimonial', $request->CODIGO_PATRIMONIAL)->first();
-        if (!$codigo) {
-            $bien->codigo_patrimonial = $request->CODIGO_PATRIMONIAL;
-            $bien->denominacion_bien = $request->DENOMINACION_BIEN;
-            $bien->nro_doc_adquisicion = $request->NRO_DOCUMENTO_ADQUIS;
-            $bien->cta_con_seguro = $request->OPC_ASEGURADO;
-            $bien->fecha_adquisicion = $request->FECHA_DOCUMENTO_ADQUIS;
-            $bien->valor_adquisicion = $request->VALOR_ADQUIS;
-            $bien->tipo_cuenta = $request->TIPO_CUENTA;
-            $bien->nro_cuenta_contable = $request->NRO_CTA_CONTABLE;
-            $bien->estado_bien = $request->NOM_EST_BIEN;
-            $bien->condicion = $request->CONDICION;
-            $bien->save();
-            return response()->json([
-                'success' => true,
-                'msg' => 'Registro de inventario agregado correctamente',
-                'data' => $bien
-            ]);
-        }
-        return response()->json([
-            'success' => false,
-            'msg' => 'El codigo patrimonial ya existe',
-            'data' => $codigo
-        ]);
+                
+                    $bien->codigo_patrimonial = $request->CODIGO_PATRIMONIAL;
+                    $bien->denominacion_bien = $request->DENOMINACION_BIEN;
+                    $bien->nro_doc_adquisicion = $request->NRO_DOCUMENTO_ADQUIS;
+                    $bien->cta_con_seguro = $request->OPC_ASEGURADO;
+                    $bien->fecha_adquisicion = $request->FECHA_DOCUMENTO_ADQUIS;
+                    $bien->valor_adquisicion = $request->VALOR_ADQUIS;
+                    $bien->tipo_cuenta = $request->TIPO_CUENTA;
+                    $bien->nro_cuenta_contable = $request->NRO_CTA_CONTABLE;
+                    $bien->estado_bien = $request->NOM_EST_BIEN;
+                    $bien->condicion = $request->CONDICION;
+                    $bien->valor_adquis = $request->VALOR_ADQUIS;
+                    $bien->valor_neto = $request->VALOR_NETO;
+                    $bien->desc_area = $request->DESC_AREA;
+                    $bien->marca = $request->MARCA;
+                    $bien->modelo = $request->MODELO;
+                    $bien->dimension = $request->DIMENSION;
+                    $bien->serie = $request->SERIE;
+                    $bien->color = $request->COLOR;
+                    $bien->save();
+                    return response()->json([
+                        'success' => true,
+                        'msg' => 'Registro de inventario agregado correctamente',
+                        'data' => $bien
+                    ]);
+                    
+                
+               
+            }else{
+                for ($i = 1; $i <= 50000; $i++) {
+                    return response()->json([
+                        'success' => false,
+                        'msg' => 'El codigo patrimonial ya existe',
+                        'data' => $codigo
+                    ]);
+                
+                    if ($i % 50 === 0) {
+                        // Realiza una pausa de 100 segundos después de cada 100 peticiones
+                        sleep(3);
+                    }
+                }
+                
+            }
+            
+        
+        // if ($response->status() == 429) {
+        //     // La solicitud fue limitada, esperar y reintentar
+        //     usleep($retryDelay * 1000);
+        //     $retryCount++;
+        // } else {
+        //     // La solicitud fue exitosa, salir del bucle
+        //     break;
+        // }
+    
         // mostrar errores
 
     }
@@ -329,6 +365,7 @@ class Register_inventaries extends Controller
         $combinador = new Merger;
         //$pdf = new FPDF();
         //echo (implode(", ", $listaArchivosPDF));
+        //echo $listaArchivosPDF2;
         foreach ($listaArchivosPDF2 as $archivoPDF) {
             $combinador->addFile($archivoPDF);
             
