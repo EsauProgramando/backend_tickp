@@ -38,72 +38,64 @@ class Register_inventaries extends Controller
 
 
 
-    public function agregarBines(
-        Request $request
-    ) {
-        
-        $bien = new RegisterInventary;
-        
-            $codigo = RegisterInventary::where('codigo_patrimonial', $request->CODIGO_PATRIMONIAL)->first();
-            if (!$codigo) {
+    public function agregarBines(Request $request)
+{
+    $data = $request->all(); // Obtener los datos de la solicitud POST
 
-                
-                    $bien->codigo_patrimonial = $request->CODIGO_PATRIMONIAL;
-                    $bien->denominacion_bien = $request->DENOMINACION_BIEN;
-                    $bien->nro_doc_adquisicion = $request->NRO_DOCUMENTO_ADQUIS;
-                    $bien->cta_con_seguro = $request->OPC_ASEGURADO;
-                    $bien->fecha_adquisicion = $request->FECHA_DOCUMENTO_ADQUIS;
-                    $bien->valor_adquisicion = $request->VALOR_ADQUIS;
-                    $bien->tipo_cuenta = $request->TIPO_CUENTA;
-                    $bien->nro_cuenta_contable = $request->NRO_CTA_CONTABLE;
-                    $bien->estado_bien = $request->NOM_EST_BIEN;
-                    $bien->condicion = $request->CONDICION;
-                    $bien->valor_adquis = $request->VALOR_ADQUIS;
-                    $bien->valor_neto = $request->VALOR_NETO;
-                    $bien->desc_area = $request->DESC_AREA;
-                    $bien->marca = $request->MARCA;
-                    $bien->modelo = $request->MODELO;
-                    $bien->dimension = $request->DIMENSION;
-                    $bien->serie = $request->SERIE;
-                    $bien->color = $request->COLOR;
-                    $bien->save();
-                    return response()->json([
-                        'success' => true,
-                        'msg' => 'Registro de inventario agregado correctamente',
-                        'data' => $bien
-                    ]);
-                    
-                
-               
-            }else{
-                for ($i = 1; $i <= 50000; $i++) {
-                    return response()->json([
-                        'success' => false,
-                        'msg' => 'El codigo patrimonial ya existe',
-                        'data' => $codigo
-                    ]);
-                
-                    if ($i % 50 === 0) {
-                        // Realiza una pausa de 100 segundos después de cada 100 peticiones
-                        sleep(3);
-                    }
-                }
-                
-            }
-            
-        
-        // if ($response->status() == 429) {
-        //     // La solicitud fue limitada, esperar y reintentar
-        //     usleep($retryDelay * 1000);
-        //     $retryCount++;
-        // } else {
-        //     // La solicitud fue exitosa, salir del bucle
-        //     break;
-        // }
-    
-        // mostrar errores
+    // Crear un arreglo para almacenar los códigos patrimoniales repetidos
+    $codigosRepetidos = [];
+    $bien = new RegisterInventary;
+    // Iterar sobre cada objeto en el arreglo de datos
+    foreach ($data as $item) {
+        $codigoPatrimonial = $item['CODIGO_PATRIMONIAL'];
 
+        // Verificar si el código patrimonial ya existe en la base de datos
+        $codigoExistente = RegisterInventary::where('codigo_patrimonial', $codigoPatrimonial)->first();
+
+        if ($codigoExistente) {
+            // Si el código patrimonial ya existe, agregarlo al arreglo de códigos repetidos
+            $codigosRepetidos[] = $codigoPatrimonial;
+        } else {
+            // Si el código patrimonial no existe, crear un nuevo registro en la base de datos
+            $bien = [
+                'codigo_patrimonial' => $item['CODIGO_PATRIMONIAL'],
+                'denominacion_bien' => $item['DENOMINACION_BIEN'],
+                'nro_doc_adquisicion' => $item['NRO_DOCUMENTO_ADQUIS'],
+                'cta_con_seguro' => $item['OPC_ASEGURADO'],
+                'fecha_adquisicion' => $item['FECHA_DOCUMENTO_ADQUIS'],
+                'valor_adquisicion' => $item['VALOR_ADQUIS'],
+                
+                'nro_cuenta_contable' => $item['NRO_CTA_CONTABLE'],
+                'estado_bien' => $item['NOM_EST_BIEN'],
+                'condicion' => $item['CONDICION'],
+                'valor_adquis' => $item['VALOR_ADQUIS'],
+                'valor_neto' => $item['VALOR_NETO'],
+                
+                'desc_area' => isset($item['DESC_AREA']) ? $item['DESC_AREA'] : null,
+                'marca' => isset($item['MARCA']) ? $item['MARCA'] : null,
+                'modelo' => isset($item['MODELO']) ? $item['MODELO'] : null,
+                'dimension' => isset($item['DIMENSION']) ? $item['DIMENSION'] : null,
+                'serie' => isset($item['SERIE']) ? $item['SERIE'] : null,
+                'color' => isset($item['COLOR']) ? $item['COLOR'] : null,
+                
+            ];
+            RegisterInventary::create($bien);
+        }
     }
+
+    if (count($codigosRepetidos) > 0) {
+        return response()->json([
+            'success' => false,
+            'msg' => 'Los siguientes códigos patrimoniales ya existen en la base de datos',
+            'data' => $codigosRepetidos
+        ]);
+    }
+
+    return response()->json([
+        'success' => true,
+        'msg' => 'Registros de inventario agregados correctamente'
+    ]);
+}
 
     public function ticketPDFExcel($codigo, $fecha,$descripcion)
     {
