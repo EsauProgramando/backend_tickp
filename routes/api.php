@@ -62,7 +62,7 @@ Route::get('rolpermiso/{id}', [RolpermisoController::class, 'rolpermisoId']);
 Route::post('rolpermiso', [RolpermisoController::class, 'rolpermisoRegister']);
 Route::put('rolpermiso/{id}', [RolpermisoController::class, 'rolpermisoUpdate']);
 Route::delete('rolpermiso/{id}', [RolpermisoController::class, 'rolpermisoDelete']);
-
+Route::get('rolpermisol/{name}', [RolpermisoController::class, 'permisosxUsuariosLogeado']);
 // Rolpermiso CRUD end
 
 Route::group(['middleware' => ['jwt.verify']], function () {

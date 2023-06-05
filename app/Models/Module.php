@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Module extends Model
 {
-    use HasFactory;
- 
-    //Relacion uno a muchos
-    public function Submodeles()
-    {
-        return $this->hasMany('App\Models\Submodeles');
-    }
+  use HasFactory;
+  protected $table = 'modules';
+  //Relacion uno a muchos
+  public function Submodeles()
+  {
+    return $this->hasMany('App\Models\Submodeles');
+  }
 }
