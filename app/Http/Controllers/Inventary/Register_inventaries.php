@@ -10,6 +10,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use iio\libmergepdf\Merger;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -405,9 +406,17 @@ class Register_inventaries extends Controller
             $bien->estado_bien=$objeto['estado_bien'];
             $bien->condicion=$objeto['condicion'];  
             $bien->fecha_inventario=$objeto['fecha_inventario']; 
+            $bien->desc_area=$objeto['desc_area']; 
             $bien->save();         
             return response()->json(['message' => 'Registro actualizado correctamente',$bien]);
     
             
     }
+    /*=====CARGAR AREA========*/
+    public function vista_area()
+    {
+        $data = DB::table('cantidad_bienes_area')->get();
+        return response()->json($data);
+    }
+
 }
