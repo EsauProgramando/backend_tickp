@@ -13,9 +13,18 @@ class SubmodelesController extends Controller
   {
     try {
       $submodules = Submodeles::join('modules', 'submodules.module_id', '=', 'modules.id')
-        ->select('submodules.*', 'modules.name as module_name') //NO QUIERO MOSTRAR UN CAMPO EN SELECT
+        ->select(
+          'submodules.id',
+          'submodules.name',
+          'submodules.route',
+          'submodules.create',
+          'submodules.read',
+          'submodules.update',
+          'submodules.delete',
+          'modules.name as module_name'
+        )
+        ->orderBy('modules.name', 'asc')
         ->get();
-      // ver los modulos que tiene el rol
 
       return response()->json([
         'success' => true,

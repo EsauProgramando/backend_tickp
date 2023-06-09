@@ -12,7 +12,7 @@ class ModuleController extends Controller
   public function moduleAll()
   {
     try {
-      $modules = Module::all();
+      $modules = Module::Select('id', 'name', 'icon')->orderBy('name', 'asc')->get();
       return response()->json([
         'success' => true,
         'msg' => 'Listado de modules',
@@ -44,27 +44,28 @@ class ModuleController extends Controller
       ]);
     }
   }
-public function moduleRegister(Request $request) {
-    try{
-        $module = new Module();
-        $module->name = $request->name;
-        $module->icon = $request->icon;
-        $module->save();
-        return response()->json([
-            'success' => true,
-            'msg' => 'Module registrado',
-            'data' =>  $module
-          ]);
+  public function moduleRegister(Request $request)
+  {
+    try {
+      $module = new Module();
+      $module->name = $request->name;
+      $module->icon = $request->icon;
+      $module->save();
+      return response()->json([
+        'success' => true,
+        'msg' => 'Module registrado',
+        'data' =>  $module
+      ]);
     } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'msg' => 'Error al registrar el module',
-            'data' =>  $e->getMessage()
-          ]);
+      return response()->json([
+        'success' => false,
+        'msg' => 'Error al registrar el module',
+        'data' =>  $e->getMessage()
+      ]);
     }
-}
+  }
 
-  public function moduleUpdate( Request $request, $id)
+  public function moduleUpdate(Request $request, $id)
   {
     try {
       $module = Module::find($id);
