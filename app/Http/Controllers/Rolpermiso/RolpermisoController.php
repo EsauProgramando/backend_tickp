@@ -12,7 +12,25 @@ class RolpermisoController extends Controller
   public function rolpermisoAll()
   {
     try {
-      $rolpermiso = Rolpermiso::get();
+      $rolpermiso = Rolpermiso::join('rols', 'rolpermiso.rols_id', '=', 'rols.id')
+        ->join('submodules', 'rolpermiso.submodules_id', '=', 'submodules.id')
+        ->join('modules', 'submodules.module_id', '=', 'modules.id')
+        ->Select(
+          'rolpermiso.id',
+          'rolpermiso.create',
+          'rolpermiso.read',
+          'rolpermiso.update',
+          'rolpermiso.delete',
+          'rolpermiso.namepermido',
+          'rols.name as rolusuario',
+          'rols.id as rols_id',
+          'submodules.name as submodulonombre',
+          'submodules.id as submoduloid',
+          'modules.name as nombremodule',
+
+        )
+        ->Get();
+
       return response()->json([
         'success' => true,
         'msg' => 'Listado de los rolpermiso',

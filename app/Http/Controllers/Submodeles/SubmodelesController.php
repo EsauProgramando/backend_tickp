@@ -21,7 +21,9 @@ class SubmodelesController extends Controller
           'submodules.read',
           'submodules.update',
           'submodules.delete',
+          'submodules.module_id',
           'modules.name as module_name'
+
         )
         ->orderBy('modules.name', 'asc')
         ->get();
