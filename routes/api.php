@@ -10,6 +10,7 @@ use App\Http\Controllers\Module\ModuleController;
 use App\Http\Controllers\Submodeles\SubmodelesController;
 use App\Http\Controllers\Rolpermiso\RolpermisoController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,8 +27,13 @@ Route::post('registerUser/{rol_id}', [UserController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::post('imprimir', [Register_inventaries::class, 'imprimirSelect']);
+
+//VISTAS
 Route::get('estados', [Register_inventaries::class, 'vista_estado']);
 Route::get('condiciones', [Register_inventaries::class, 'vista_condicion']);
+Route::get('area', [Register_inventaries::class, 'vista_area']);
+
+
 Route::get('biencodigo/{codigo}', [Register_inventaries::class, 'bienid']);
 Route::put('inventario/{codigo}', [Register_inventaries::class, 'update_inventario']);
 
