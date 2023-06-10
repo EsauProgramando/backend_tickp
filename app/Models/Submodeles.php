@@ -5,19 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rol extends Model
+class Submodeles extends Model
 {
-
     use HasFactory;
+     protected $table = 'submodules';
+    //Relacion uno a muchos(inversa)
 
-    protected $table = 'rols';
-    //created_at y updated_at no se incluyen en el modelo
-    public $timestamps = false;
-
-    //Relacion uno a muchos
-    public function User()
+    public function Module()
     {
-        return $this->hasMany('App\Models\User');
+        return $this->belongsTo('App\Models\Module');
     }
 
     //Relacion uno a muchos

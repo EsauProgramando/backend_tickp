@@ -32,6 +32,7 @@ class register_inventaries extends Model
         'user_id',
     ];
     //Relacion uno a muchos(inversa)
+    
     public function User()
     {
         return $this->belongsTo('App\Models\User');
