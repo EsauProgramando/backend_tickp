@@ -12,6 +12,10 @@ use iio\libmergepdf\Merger;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
 
@@ -44,14 +48,6 @@ class Register_inventaries extends Controller
     ]);
   }
 
-
-  // $register_inventaries = RegisterInventary::paginate();
-  // return response()->json([
-  //   'success' => true,
-  //   'msg' => 'Listado de registros de inventario',
-  //   'data' =>  $register_inventaries
-  // ]);
-  // }
 
   public function bienid($codigo)
   {
@@ -443,5 +439,91 @@ class Register_inventaries extends Controller
   {
     $data = DB::table('cantidad_bienes_area')->get();
     return response()->json($data);
+  }
+
+  /*=======CARGAR DATA===========*/
+  public function generarExcel()
+  {
+    // Obtener los datos de la base de datos
+    $datos = DB::table('register_inventaries')->select(
+      'ruc_entidad',
+      'codigo_patrimonial',
+      'denominacion_bien',
+      'actos_de_adquisicion_que_genera_alta',
+      'nro_doc_adquisicion',
+      'fecha_adquisicion',
+      'valor_adquisicion',
+      'tipo_uso_cuenta',
+      'tipo_cuenta',
+      'nro_cuenta_contable',
+      'cta_con_seguro',
+      'estado_bien',
+      'condicion',
+      'valor_adquis',
+      'valor_neto',
+      'desc_area',
+      'marca',
+      'modelo',
+      'dimension',
+      'serie',
+      'color'
+    )->get();
+
+    // Obtener la ruta absoluta del directorio actual
+    $directorioActual = __DIR__;
+
+    // Concatenar el nombre del archivo Excel al final de la ruta del directorio
+    $rutaExcel = $directorioActual . '/Formato_Carga_Masiva_Altas_v1.xlsm';
+
+    // Cargar el archivo Excel existente
+    $spreadsheet = IOFactory::load($rutaExcel);
+
+    // Obtener la hoja de trabajo activa
+    $hoja = $spreadsheet->getActiveSheet();
+    $fila = 6;
+    foreach ($datos as $dato) {
+      $hoja->getCell('B' . $fila)->setValue($dato->ruc_entidad);
+      $hoja->getCell('C' . $fila)->setValue($dato->codigo_patrimonial);
+      $hoja->getCell('D' . $fila)->setValue($dato->denominacion_bien);
+      $hoja->getCell('E' . $fila)->setValue($dato->actos_de_adquisicion_que_genera_alta);
+      $hoja->getCell('F' . $fila)->setValue($dato->nro_doc_adquisicion);
+      $hoja->getCell('G' . $fila)->setValue($dato->fecha_adquisicion);
+      $hoja->getCell('H' . $fila)->setValue($dato->valor_adquisicion);
+      $hoja->getCell('I' . $fila)->setValue($dato->tipo_uso_cuenta);
+      $hoja->getCell('J' . $fila)->setValue($dato->tipo_cuenta);
+      $hoja->getCell('K' . $fila)->setValue($dato->nro_cuenta_contable);
+      $hoja->getCell('L' . $fila)->setValue($dato->cta_con_seguro);
+      $hoja->getCell('M' . $fila)->setValue($dato->estado_bien);
+      $hoja->getCell('N' . $fila)->setValue($dato->condicion);
+      $hoja->getCell('O' . $fila)->setValue($dato->marca);
+      $hoja->getCell('P' . $fila)->setValue($dato->modelo);
+      $hoja->getCell('Q' . $fila)->setValue("-");
+      $hoja->getCell('R' . $fila)->setValue($dato->color);
+      $hoja->getCell('S' . $fila)->setValue($dato->serie);
+      $hoja->getCell('T' . $fila)->setValue($dato->dimension);
+
+      // Incrementar la variable de la fila para pasar a la siguiente fila
+      $fila++;
+    }
+
+    // Guardar el archivo Excel modificado en formato XLSX
+    $rutaExcelModificado = __DIR__ . '/excel_modificado';
+    $writer = new Xlsx($spreadsheet);
+    $writer->save($rutaExcelModificado);
+    //rename($rutaExcelModificado, $rutaExcelModificado . '.xlsm');
+    // Cambiar la extensión del archivo de XLSX a XLSM
+    //    $rutaExcelModificadoXlsm = $directorioActual .'/excel_modificado.xlsm';
+    rename($rutaExcelModificado, $rutaExcelModificado . '.xlsm');
+    $rutaExcelModificado = __DIR__ . '/excel_modificado.xlsm';
+    // Descargar el archivo Excel modificado
+
+
+    // $headers = ['Content-Type: application/vnd.ms-excel.sheet.macroEnabled.12'];
+
+    // return response()->download($rutaExcelModificado, 'excel_modificado.xlsm', $headers);
+    return response()->file($rutaExcelModificado, [
+      'Content-Type' => 'application/vnd.ms-excel.sheet.macroEnabled.12',
+      'Content-Disposition' => 'attachment; filename=excel_modificado.xlsm',
+    ]);
   }
 }

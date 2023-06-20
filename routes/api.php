@@ -39,6 +39,9 @@ Route::put('inventario/{codigo}', [Register_inventaries::class, 'update_inventar
 
 Route::get('barras/{codigo}', [Register_inventaries::class, 'BarraCodigo']);
 
+//EXCEL SINABIP
+Route::get('formato', [Register_inventaries::class, 'generarExcel']);
+
 
 Route::post('reset-password', [UserController::class, 'resetPassword']);
 // Rol CRUD inicio
