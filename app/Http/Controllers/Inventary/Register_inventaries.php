@@ -524,6 +524,6 @@ class Register_inventaries extends Controller
     return response()->file($rutaExcelModificado, [
       'Content-Type' => 'application/vnd.ms-excel.sheet.macroEnabled.12',
       'Content-Disposition' => 'attachment; filename=excel_modificado.xlsm',
-    ]);
+    ])->deleteFileAfterSend(true);
   }
 }
