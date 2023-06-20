@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\User;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -30,13 +31,17 @@ class AuthController extends Controller
 
   protected function respondWithToken($token)
   {
+    $expiration = Carbon::now()->addDays(7);
+    $user =
+      User::join('rols', 'rols.id', '=', 'users.rol_id')
+      ->select('users.id', 'users.name', 'users.email', 'users.rol_id', 'rols.name as rol')
+      ->where('users.id', auth()->user()->id)
+      ->first();
+    $newToken = JWTAuth::fromUser($user, ['exp' => $expiration->timestamp]);
     return response()->json([
       'success' => true,
-      'user' => User::join('rols', 'rols.id', '=', 'users.rol_id')
-        ->select('users.id', 'users.name', 'users.email', 'users.rol_id', 'rols.name as rol')
-        ->where('users.id', auth()->user()->id)
-        ->first(),
-      'access_token' => $token,
+      'user' => $user,
+      'access_token' => $newToken,
       'token_type' => 'Bearer',
       'expires_in' => JWTAuth::factory()->getTTL() * 60
 
