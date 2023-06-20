@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+
 
 class Register_inventaries extends Controller
 {
@@ -467,16 +470,26 @@ class Register_inventaries extends Controller
         }
 
        // Guardar el archivo Excel modificado en formato XLSX
-       $rutaExcelModificado = $directorioActual .'/excel_modificado.xlsx';
-       $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-       $writer->save($rutaExcelModificado);
-
+       $rutaExcelModificado = __DIR__ . '/excel_modificado';
+    $writer = new Xlsx($spreadsheet);
+    $writer->save($rutaExcelModificado);
+       //rename($rutaExcelModificado, $rutaExcelModificado . '.xlsm');
        // Cambiar la extensión del archivo de XLSX a XLSM
     //    $rutaExcelModificadoXlsm = $directorioActual .'/excel_modificado.xlsm';
-    //    rename($rutaExcelModificado, $rutaExcelModificadoXlsm);
-
+    rename($rutaExcelModificado, $rutaExcelModificado . '.xlsm');
+    $rutaExcelModificado = __DIR__ . '/excel_modificado.xlsm';
         // Descargar el archivo Excel modificado
-        return response()->download($rutaExcelModificado);
+
+        
+        // $headers = ['Content-Type: application/vnd.ms-excel.sheet.macroEnabled.12'];
+        
+        // return response()->download($rutaExcelModificado, 'excel_modificado.xlsm', $headers);
+        return response()->file($rutaExcelModificado, [
+            'Content-Type' => 'application/vnd.ms-excel.sheet.macroEnabled.12',
+            'Content-Disposition' => 'attachment; filename=excel_modificado.xlsm',
+        ]);
+
+        
     }
 
 }
