@@ -73,7 +73,7 @@ Route::put('rolpermiso/{id}', [RolpermisoController::class, 'rolpermisoUpdate'])
 Route::delete('rolpermiso/{id}', [RolpermisoController::class, 'rolpermisoDelete']);
 Route::get('rolpermisol/{name}', [RolpermisoController::class, 'permisosxUsuariosLogeado']);
 // Rolpermiso CRUD end
-
+Route::get('inventaryP', [Register_inventaries::class, 'PaginadoInvitario']);
 Route::group(['middleware' => ['jwt.verify']], function () {
   Route::get('usersinfo', [UserController::class, 'index']); //http://127.0.0.1:8000/api/usersinfo
   Route::post('updateProfile', [UserController::class, 'updateProfile']); //actualizar perfil
